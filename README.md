@@ -108,7 +108,7 @@ python ./cal_diffusion_metric.py  --cal_IS --cal_FID --cal_CLIP \
     --path1 ./examples/imgs1 --path2 ./examples/imgs2 \
     --real_path ./examples/imgs1 --fake_path ./examples/prompt
 # for jsonl
-python ./cal_diffusion_metric.py  --cal_IS True --cal_FID True --cal_CLIP True \
+python ./cal_diffusion_metric.py  --cal_IS --cal_FID --cal_CLIP \
     --path1 ./examples/imgs1 --path2 ./examples/imgs2 \
     --jsonl_path .examples/img-txt.jsonl # for img-txt
 ```
