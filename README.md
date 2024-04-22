@@ -1,42 +1,64 @@
 # T2I-Metrics--这是一个关于Text-to-Image中Metrics的Pytorch集成pipeline代码库
-## 0. 项目介绍
 
-近年来diffusion models的发展十分迅速，但本人发现目前关于diffusion models的评价指标并没有良好的集成.因此本人参考了市面上一些比较标准的计算diffusion metrics的代码, 自己搭建了一个关于diffusion models若干评价指标的集成pipeline代码库。欢迎各位star + fork。
+## 0. Projects Introduction
 
-后续还会更新其他的一些指标，以及tensorflow的集成pipeline，可能也会增加T2V系列, 敬请期待！！！
+In recent years, the development of diffusion models is very rapid, but I found that the current evaluation metrics on diffusion models are not well integrated. Therefore, I refer to the market for some of the more standard code for calculating diffusion metrics, and built a pipeline code base for integrating several evaluation metrics of diffusion models. Welcome to star + fork.
 
-## 1. 环境配置
-#### 1.1 利用requirement.txt文件进行安装
+We will also update some other metrics, and tensorflow integration pipeline, may also add T2V series, please look forward to!
+
+## 1. Environment Configuration
+
+#### 1.1 Installation with the requirement.txt
+
 ```
 pip install -r requirements.txt
 ```
-#### 1.2 利用environment.yaml文件进行安装
+
+#### 1.2 Installation with environment.yaml
+
 ```
 conda env create -f environment.yaml
 ```
-#### 1.3 利用pip命令安装
+
+#### 1.3 Installation with the pip command
+
 - Install PyTorch:
+
 ```
 pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu116  # Choose a version that suits your GPU
 ```
+
 - Install Scipy
+
 ```
 pip install scipy
 ```
+
 - Install CLIP:
+
 ```
 pip install git+https://github.com/openai/CLIP.git
 ```
 
-## 2. 数据准备
-- 关于IS Value的数据格式
+## 2. Model Weights Download
+
+You need to download the inception_v3_google.pth, pt_inception.pth, and ViT-B-32.pt weights files and place them in the checkpoints folder. We have integrated them into the following links for your convenience.
+
+[Baidu cloud disk link, extraction code: fpfp](https://pan.baidu.com/s/1nGPq5y2OfCumMQkY6ROKGA?)
+
+## 3. Data Preparation
+
+- About the data format of IS Value
+
 ```
 ├── path/to/image
 │   ├── cat.png
 │   ├── dog.png
 │   └── bird.jpg
 ```
-- 关于FID Value的数据格式
+
+- About the data format of FID Value
+
 ```
 ├── path/to/image
 │   ├── cat1.png
@@ -47,7 +69,9 @@ pip install git+https://github.com/openai/CLIP.git
 │   ├── dog2.png
 │   └── bird2.jpg
 ```
-- 关于CLIP Score的数据格式
+
+- About the CLIP Score data format
+
 ```
 ├── path/to/image
 │   ├── cat.png
@@ -58,7 +82,9 @@ pip install git+https://github.com/openai/CLIP.git
     ├── dog.txt
     └── bird.txt
 ```
+
 OR
+
 ```
 ├── path/to/jsonl
 │   ├── {"real_path": cat.png, "fake_path": cat.txt or prompt}
@@ -66,18 +92,19 @@ OR
 │   └── {"real_path": bird.png, "fake_path": bird.txt or prompt}
 ```
 
-## 3. 快速开始
-我们提供了一个简单的脚本，用于快速计算关于diffusion models若干指标的集成pipeline。
+## 4. Quick Start
+
+We provide a simple script for quickly computing an integrated pipeline on several metrics of diffusion models.
 
 ```
 bash scripts/start.sh
 ```
 
-您也可以直接在命令行运行如下的命令进行metrics的计算
+You can also run the following command directly from the command line to calculate metrics.
 
 ```
 # for img-txt
-python ./cal_diffusion_metric.py  --cal_IS True --cal_FID True --cal_CLIP True \
+python ./cal_diffusion_metric.py  --cal_IS --cal_FID --cal_CLIP \
     --path1 ./examples/imgs1 --path2 ./examples/imgs2 \
     --real_path ./examples/imgs1 --fake_path ./examples/prompt
 # for jsonl
@@ -86,15 +113,17 @@ python ./cal_diffusion_metric.py  --cal_IS True --cal_FID True --cal_CLIP True \
     --jsonl_path .examples/img-txt.jsonl # for img-txt
 ```
 
-其中，--cal_IS 表示是否计算IS， 默认为True。 --cal_FID 表示是否计算FID， 默认为True。 --cal_CLIP 表示是否计算CLIP， 默认为True。
+where --cal_IS indicates whether to calculate IS, --cal_FID indicates whether to calculate FID, and --cal_CLIP indicates whether to calculate CLIP.
 
-其中，--path1 表示计算FID时的生成图像的路径，--path2 表示计算FID时的真实图像的路径。计算IS会默认采用--path1。
+Where --path1 denotes the path of the generated image when calculating FID, and --path2 denotes the path of the real image when calculating FID. Calculate IS will use --path1 by default.
 
-其中，--real_path 表示计算clip score时使用的真实图像的路径, --fake_path 表示计算clip score时使用的文字的路径。 也支持传入单个--jsonl_path, jsonl格式具有优先级。
-## 4. 参考来源
+Where --real_path denotes the path to the real image used to compute the clip score, and --fake_path denotes the path to the text used to compute the clip score. Passing in a single --jsonl_path is also supported, with the jsonl format taking precedence.
 
-[IS Value参考链接](https://github.com/sbarratt/inception-score-pytorch/tree/master)
+## 5. Reference Source
 
-[FID Value参考链接](https://github.com/mseitzer/pytorch-fid)
+[IS Value reference link](https://github.com/sbarratt/inception-score-pytorch/tree/master)
 
-[CLIP Score参考链接](https://github.com/Taited/clip-score)
+[FID Value reference link](https://github.com/mseitzer/pytorch-fid)
+
+[CLIP Score Reference Link](https://github.com/Taited/clip-score)
+
