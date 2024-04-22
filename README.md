@@ -1,4 +1,4 @@
-# T2I-Metrics--This is a Pytorch-integrated pipeline codebase for Metrics in Text-to-Image. [To refer to the Chinese introduction, please click on this link](https://github.com/Taited/clip-score)
+# T2I-Metrics--This is a Pytorch-integrated pipeline codebase for Metrics in Text-to-Image. [To refer to the Chinese introduction, please click on this link.](https://github.com/QuanjianSong/T2I-Metrics/blob/main/README_cn.md)
 
 ## 0. Projects Introduction
 
