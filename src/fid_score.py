@@ -263,14 +263,14 @@ def compute_is_of_path(path, model, batch_size, dims, device,
     return np.mean(split_scores), np.std(split_scores)
 
 
-def cal_fid_value(paths, batch_size, device, dims, num_workers=1):
+def cal_fid_value(paths, batch_size, device, dims, num_workers=1, ckpt_path="/home/lzh/code/todo/T2I-Metrics/checkpoints/pt_inception.pth"):
     """Calculates the FID of two paths"""
     for p in paths:
         if not os.path.exists(p):
             raise RuntimeError('Invalid path: %s' % p)
     # breakpoint()
     block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[dims]
-    model = InceptionV3([block_idx]).to(device)
+    model = InceptionV3([block_idx], ckpt_path=ckpt_path).to(device)
 
     # IS, IS_std = compute_is_of_path(paths[0], model_tmp, batch_size,
     #                                     1000, device, num_workers)

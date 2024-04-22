@@ -87,9 +87,10 @@ def inception_score(imgs, cuda=True, batch_size=32, resize=False, splits=1):
     return np.mean(split_scores), np.std(split_scores)
 
 def cal_is_value(path, batch_size, dims, device,
-                    num_workers=1, splits=5):
+                    num_workers=1, splits=5, ckpt_path="/home/lzh/code/todo/T2I-Metrics/checkpoints/inception_v3_google.pth"):
     model = inception_v3(pretrained=False, transform_input=False).to(device)
-    state_dict = torch.load("/home/lzh/code/todo/T2I-Metrics/checkpoints/inception_v3_google.pth")
+    print('Loading inception_v3 model: {}'.format(ckpt_path))
+    state_dict = torch.load(ckpt_path)
     model.load_state_dict(state_dict)
     path = pathlib.Path(path)
     files = sorted([file for ext in IMAGE_EXTENSIONS

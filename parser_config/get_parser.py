@@ -15,7 +15,7 @@ def get_basic_parser():
 
 def get_is_value_parser():
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter, add_help=False)
-    parser.add_argument('--cal_IS', type=str, default=False,
+    parser.add_argument('--cal_IS', action='store_true',
                         help='whether or not to calculate the IS.')
     parser.add_argument('--is_dims', type=int, default=1000,
                         choices=list(InceptionV3.BLOCK_INDEX_BY_DIM),
@@ -24,6 +24,8 @@ def get_is_value_parser():
     parser.add_argument('--save-stats', action='store_true',
                         help=('Generate an npz archive from a directory of samples. '
                             'The first path is used as input and the second as output.'))
+    parser.add_argument('--inceptionv3_path', type=str, default="/home/lzh/code/todo/T2I-Metrics/checkpoints/inception_v3_google.pth", 
+                        help=('the path of inceptionv3'))
     parser.add_argument('--path1', type=str, 
                         help=('Paths to the generated images or '
                             'to .npz statistic files'))
@@ -32,7 +34,7 @@ def get_is_value_parser():
 
 def get_fid_value_parser():
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter, add_help=False)
-    parser.add_argument('--cal_FID', type=str, default=False,
+    parser.add_argument('--cal_FID', action='store_true',
                         help='whether or not to calculate the FID.')
     parser.add_argument('--fid_dims', type=int, default=2048,
                         choices=list(InceptionV3.BLOCK_INDEX_BY_DIM),
@@ -41,6 +43,8 @@ def get_fid_value_parser():
     parser.add_argument('--save_stats', type=bool, default=False,
                         help=('Dimensionality of Inception features to use. '
                             'By default, uses pool3 features'))
+    parser.add_argument('--pt_inception_path', type=str, default="/home/lzh/code/todo/T2I-Metrics/checkpoints/pt_inception.pth", 
+                        help=('the path of pt_inception'))
     parser.add_argument('--path2', type=str, 
                         help=('Paths to the generated images or '
                             'to .npz statistic files'))
@@ -49,7 +53,7 @@ def get_fid_value_parser():
 
 def get_clip_score_parser():
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter, add_help=False)
-    parser.add_argument('--cal_CLIP', type=str, default=True,
+    parser.add_argument('--cal_CLIP', action='store_true',
                         help='whether or not to calculate the FID.')
     parser.add_argument('--clip-model', type=str, default='/home/lzh/code/todo/T2I-Metrics/checkpoints/ViT-B-32.pt',
                         help='CLIP model to use')

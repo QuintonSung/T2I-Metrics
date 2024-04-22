@@ -33,7 +33,8 @@ class InceptionV3(nn.Module):
                  resize_input=True,
                  normalize_input=True,
                  requires_grad=False,
-                 use_fid_inception=True):
+                 use_fid_inception=True,
+                 ckpt_path="/home/lzh/code/todo/T2I-Metrics/checkpoints/pt_inception.pth"):
         """Build pretrained InceptionV3
 
         Parameters
@@ -78,8 +79,11 @@ class InceptionV3(nn.Module):
 
         if use_fid_inception:
             # 导入自定义权重
-            inception = fid_inception_v3()
+            # breakpoint()
+            print('Loading pt_inception model: {}'.format(ckpt_path))
+            inception = fid_inception_v3(ckpt_path=ckpt_path)
         else:
+            print('Loading pt_inception model: DEFAULT')
             inception = _inception_v3(weights='DEFAULT')
 
         # Block 0: input to maxpool1
@@ -195,7 +199,7 @@ def _inception_v3(*args, **kwargs):
     return torchvision.models.inception_v3(*args, **kwargs)
 
 
-def fid_inception_v3():
+def fid_inception_v3(ckpt_path="/home/lzh/code/todo/T2I-Metrics/checkpoints/pt_inception.pth"):
     """Build pretrained Inception model for FID computation
 
     The Inception model for FID computation uses a different set of weights
@@ -218,7 +222,7 @@ def fid_inception_v3():
     inception.Mixed_7c = FIDInceptionE_2(2048)
 
     # state_dict = load_state_dict_from_url(FID_WEIGHTS_URL, progress=True)
-    state_dict = torch.load('/home/lzh/code/todo/T2I-Metrics/checkpoints/pt_inception.pth')
+    state_dict = torch.load(ckpt_path)
     inception.load_state_dict(state_dict)
     return inception
 

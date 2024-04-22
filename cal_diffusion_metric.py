@@ -42,7 +42,9 @@ def main(args):
     # metrics_dicts
     metrics = {}
 
-    if args.cal_IS:
+    # breakpoint()
+
+    if args.cal_IS == True:
         assert args.path1 is not None, 'path1 is necessary for calculating IS value.'
         print('********************Calculate IS Value*********************')
         is_value, is_std = cal_is_value(args.path1, args.batch_size, args.is_dims,
@@ -51,18 +53,19 @@ def main(args):
         metrics['IS_Value'] = {"IS_Value": is_value, "IS_std": is_std}
         print('**************************End******************************')
 
-    if args.cal_FID:
+    if args.cal_FID == True:
         assert args.path1 is not None and args.path2 is not None, 'path1 and path2 is necessary for calculating FID value.'
         print('********************Calculate FID Value*********************')
         fid_value = cal_fid_value([args.path1, args.path2],
                                         args.batch_size,
                                         device,
                                         args.fid_dims,
-                                        num_workers)
+                                        num_workers,
+                                        ckpt_path=args.pt_inception_path)
         metrics['FID_Value'] = fid_value
         print('**************************End******************************')
 
-    if args.cal_CLIP:
+    if args.cal_CLIP == True:
         assert args.jsonl_path is not None or args.real_path is not None and args.fake_path is not None, 'jsonl_path or real_path and fake_path is necessary for calculating CLIP score.'
         print('********************Calculate CLIP Score*********************')
         clip_score = cal_clip_score(clip_model=args.clip_model, batch_size=args.batch_size, device=device,
